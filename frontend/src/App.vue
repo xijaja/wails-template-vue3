@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue';
 import DarkMode from './components/DarkMode.vue';
+import { isAuth } from './store/store';
 
 // 侧边栏导航
 const menu = [
@@ -10,15 +11,14 @@ const menu = [
 // 侧边栏导航激活样式
 const activeClass = 'text-blue-600 dark:text-blue-400'
 // 是否非 Mac 平台
-const isNotMac = navigator.userAgent.toUpperCase().indexOf('MAC') < 0;
-const token = localStorage.getItem("token");
+const isNotMac = navigator.userAgent.toUpperCase().indexOf('MAC') < 0; 
 </script>
 
 <template>
   <main class="flex h-screen">
     <!-- 侧边栏导航，未登录时不显示 -->
     <nav
-      v-show="token"
+      v-show="isAuth"
       class="flex-none flex flex-col justify-between w-[70px] items-center text-center select-none z-20 bg-gray-50/10 dark:bg-slate-900/80"
       style="--wails-draggable: drag"
     >
