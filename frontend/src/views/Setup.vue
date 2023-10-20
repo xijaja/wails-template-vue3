@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import router from "../router";
-import { isAuth } from "../store/store";
+import { Auth } from "../store/store";
 
 // 退出登录按钮样式
 const butClass =
@@ -9,7 +9,7 @@ const butClass =
 // 退出登录
 function logout() {
   localStorage.removeItem("token");
-  isAuth.value = false; // 退出登录后，isAuth 置为 false
+  Auth.logged = false; // 退出登录后，isAuth 置为 false
   router.push("/login");
 }
 </script>
@@ -17,7 +17,7 @@ function logout() {
 <template>
   <section class="space-y-4">
     <div class="flex gap-4 items-center">
-      <!-- <img src="src/assets/vue.svg" alt="logo" class="w-10 h-10 select-none" /> -->
+      <img src="../assets/vue.svg" alt="logo" class="w-10 h-10 select-none" />
       <h1 class="text-2xl">Wails And Vue3</h1>
     </div>
 

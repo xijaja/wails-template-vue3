@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, reactive } from 'vue';
 import router from "../router";
-import { isAuth } from '../store/store';
+import { Auth } from '../store/store';
 
 // 输入登录参数
 const loginParams = reactive({ username: '', password: '' });
@@ -21,7 +21,7 @@ async function login() {
   // TODO: 登录逻辑
   // 登录成功
   localStorage.setItem("token", "there_is_user_token_1234567890"); // 将 token 存储到本地
-  isAuth.value = true; // 设置登录状态
+  Auth.logged = true; // 设置登录状态
   // 跳转到首页
   router.push('/home');
 };

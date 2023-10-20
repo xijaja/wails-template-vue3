@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue';
 import DarkMode from './components/DarkMode.vue';
-import { isAuth } from './store/store';
+import { WindowMinimise, WindowMaximise, WindowUnmaximise, Quit } from "../wailsjs/runtime/runtime";
+import { ref } from 'vue';
+import { Auth } from './store/store';
 
 // 侧边栏导航
 const menu = [
@@ -11,14 +13,28 @@ const menu = [
 // 侧边栏导航激活样式
 const activeClass = 'text-blue-600 dark:text-blue-400'
 // 是否非 Mac 平台
-const isNotMac = navigator.userAgent.toUpperCase().indexOf('MAC') < 0; 
+const isNotMac = navigator.userAgent.toUpperCase().indexOf('MAC') < 0;
+// 是否最大化
+const isMaximised = ref(false);
+console.log("isMaximised:", isMaximised.value);
+
+// 窗口最大化
+function CustomizationWindowMaximise() {
+  isMaximised.value = true;
+  WindowMaximise();
+}
+// 窗口取消最大化
+function CustomizationWindowUnmaximise() {
+  isMaximised.value = false;
+  WindowUnmaximise();
+}
 </script>
 
 <template>
   <main class="flex h-screen">
     <!-- 侧边栏导航，未登录时不显示 -->
     <nav
-      v-show="isAuth"
+      v-show="Auth.logged"
       class="flex-none flex flex-col justify-between w-[70px] items-center text-center select-none z-20 bg-gray-50/10 dark:bg-slate-900/80"
       style="--wails-draggable: drag"
     >
@@ -38,13 +54,13 @@ const isNotMac = navigator.userAgent.toUpperCase().indexOf('MAC') < 0;
     <div class="pl-2 w-full bg-white dark:bg-gray-900/90">
       <!-- windows 定制化窗口按钮 -->
       <div v-if="isNotMac" class="flex h-10 justify-end flex-0">
-        <button class="w-10 h-10 text-xl hover:bg-[#E9E9E9] dark:hover:bg-[#2D2D2D]">
+        <button class="w-10 h-10 text-xl flex flex-col items-center justify-center hover:bg-[#E9E9E9] dark:hover:bg-[#2D2D2D] hover:text-gray-500" @click="WindowMinimise">
           <Icon icon="mdi:window-minimize" />
         </button>
-        <button class="w-10 h-10 text-xl hover:bg-[#E9E9E9] dark:hover:bg-[#2D2D2D]">
+        <button class="w-10 h-10 text-xl flex flex-col items-center justify-center hover:bg-[#E9E9E9] dark:hover:bg-[#2D2D2D]" @click="isMaximised ? CustomizationWindowUnmaximise() : CustomizationWindowMaximise()">
           <Icon icon="mdi:window-maximize" />
-        </button>
-        <button class="w-10 h-10 text-xl hover:bg-[#C13124] dark:hover:bg-[#C13124]">
+        </button>        
+        <button class="w-10 h-10 text-xl flex flex-col items-center justify-center hover:bg-[#C13124] dark:hover:bg-[#C13124] hover:text-white" @click="Quit">
           <Icon icon="mdi:window-close" />
         </button>
       </div>
