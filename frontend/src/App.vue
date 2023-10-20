@@ -16,18 +16,6 @@ const activeClass = 'text-blue-600 dark:text-blue-400'
 const isNotMac = navigator.userAgent.toUpperCase().indexOf('MAC') < 0;
 // 是否最大化
 const isMaximised = ref(false);
-console.log("isMaximised:", isMaximised.value);
-
-// 窗口最大化
-function CustomizationWindowMaximise() {
-  isMaximised.value = true;
-  WindowMaximise();
-}
-// 窗口取消最大化
-function CustomizationWindowUnmaximise() {
-  isMaximised.value = false;
-  WindowUnmaximise();
-}
 </script>
 
 <template>
@@ -57,9 +45,9 @@ function CustomizationWindowUnmaximise() {
         <button class="w-10 h-10 text-xl flex flex-col items-center justify-center hover:bg-[#E9E9E9] dark:hover:bg-[#2D2D2D] hover:text-gray-500" @click="WindowMinimise">
           <Icon icon="mdi:window-minimize" />
         </button>
-        <button class="w-10 h-10 text-xl flex flex-col items-center justify-center hover:bg-[#E9E9E9] dark:hover:bg-[#2D2D2D]" @click="isMaximised ? CustomizationWindowUnmaximise() : CustomizationWindowMaximise()">
+        <button class="w-10 h-10 text-xl flex flex-col items-center justify-center hover:bg-[#E9E9E9] dark:hover:bg-[#2D2D2D]" @click="isMaximised ? (WindowUnmaximise(),isMaximised = false) : (WindowMaximise(), isMaximised = true)">
           <Icon icon="mdi:window-maximize" />
-        </button>        
+        </button>     
         <button class="w-10 h-10 text-xl flex flex-col items-center justify-center hover:bg-[#C13124] dark:hover:bg-[#C13124] hover:text-white" @click="Quit">
           <Icon icon="mdi:window-close" />
         </button>
